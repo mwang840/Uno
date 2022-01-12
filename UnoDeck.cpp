@@ -23,6 +23,7 @@ UnoDeck::UnoDeck() {
 	string events[] = {"skip", "reverse", "drawTwo", "drawFour", "wild"};
 	this->totalCards-=7;
 	this->hand->cardNum +=7;
+
 }
 
 //Skips the player and check to see if the next's next pointer is not null
@@ -30,7 +31,7 @@ UnoPlayer *UnoDeck::skip(UnoPlayer *person){
 	UnoPlayer *player = person->prev;
 	//Checks to see if there are more than two players
 	if(player->next->next != player){
-		player = person->next;
+		player = person->next->next;
 		return player;
 	}
 	//In the case there are two players, easy one
@@ -50,10 +51,12 @@ UnoPlayer *UnoDeck::skip(UnoPlayer *person){
 
 
 //Reverses the order of the turn. Need to figure out how the order would be reversed
-UnoPlayer *UnoDeck::reverse(){
-
+UnoPlayer *UnoDeck::reverse(UnoPlayer *person){
+	UnoPlayer *player = person;
 	if(player->prev != player){
-		return player->prev;
+		bool clockwise = true;
+		player = player->prev;
+		player->tail = player->next;
 	}
 	else{
 		return NULL;
@@ -70,15 +73,41 @@ UnoCard *UnoDeck::deal(){
 	}
 
 	else{
-		this->hand->cardNum = 0;
-		UnoCard *back = card;
+		totalCards = 0;
+		UnoCard *prev = card;
+		while(card != NULL){
+			prev = card;
+			//In the case of a wild or a drawFour card
+			if(card->cardNum == 0 && card->color == ""){
+				if(card->event == "drawFour" || card->event == "wild"){
+					UnoCard *special = new UnoCard(card->event);
+				}
+			}
+			//Otherwise its a number, color with other events besides drawFour and wild
+			else{
+				if(card->color != "" && card->cardNum != -1){
+					UnoCard *special = new UnoCard(card->color);
+				}
+				else if(card->cardNum == -1){
 
-		for(int i = 0; i < 7; ++i){
+				}
+			}
+			card = card->next;
+		}
+
+
+		//head->next = head;
+		//delete head;
+		//p
+
+		/*for(int i = 0; i < 7; ++i){
 			while(card != NULL){
 
 			}
 		}
+		*/
 	}
+	return card;
 }
 
 
@@ -137,6 +166,11 @@ int UnoDeck::getTotalDiscarded(){
 //Shuffles the deck before dealing out the cards
 void UnoDeck::shuffle(){
 	int shuffle = rand % 108;
+	for(int i = 0; i < shuffle; ++i){
+
+	}
+
+
 }
 
 //In case a player has a wild card
