@@ -9,20 +9,25 @@
 #define UNODECK_HPP_
 #include <iostream>
 #include "UnoCard.hpp"
+#include "UnoPlayer.hpp"
 using namespace std;
 
 class UnoDeck {
-	//Deck for the cards
+	//Deck for the cards and also includes player
 	UnoCard *hand;
 	UnoCard *discarded;
-	int totalCards = 108;
-	int totalDiscarded = 0;
+	UnoPlayer *player;
+	int totalCards;
+	UnoCard *card;
+	int totalDiscarded;
+
 public:
 	UnoDeck();
 	UnoDeck(UnoCard *card);
 	UnoCard *deal();
-	UnoCard *skip();
-	UnoCard *reverse();
+	UnoPlayer *skip(UnoPlayer *person);
+	UnoPlayer *reverse(UnoPlayer *person);
+	void addCard(UnoCard *card);
 	void shuffle();
 	void reShuffle();
 	void wild(string color);
