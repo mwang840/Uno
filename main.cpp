@@ -7,10 +7,16 @@
 
 #include <iostream>
 #include "Uno.hpp"
+#include "UnoDeck.hpp"
+#include "UnoPlayer.hpp"
+#include <math.h>
 using namespace std;
 
 int main(){
 	int players = 0;
+	bool uno = false;
+	bool unoOut = false;
+	bool oneLeft = false;
 	cout<<"# of players has to be two or more" <<endl;
 	cin << players;
 	if(players < 2){
@@ -18,6 +24,18 @@ int main(){
 	}
 	else{
 		//starts the game
+		UnoDeck *hand = new UnoDeck();
+		hand->deal();
+
+		if(unoOut == true){
+			cout<<hand->player << " is out of the game!"<<endl;
+			players--;
+		}
+
+		if(oneLeft == true){
+			cout<<"Game over, you lost"<<endl;
+		}
+
 	}
 
 
