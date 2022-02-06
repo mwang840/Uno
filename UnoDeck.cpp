@@ -53,6 +53,7 @@ UnoPlayer *UnoDeck::skip(UnoPlayer *person){
 //Reverses the order of the turn. Need to figure out how the order would be reversed
 UnoPlayer *UnoDeck::reverse(UnoPlayer *person){
 	UnoPlayer *player = person;
+	cout<<"Reversing the order";
 	if(player->prev != player){
 		bool clockwise = true;
 		player = player->prev;
@@ -66,35 +67,35 @@ UnoPlayer *UnoDeck::reverse(UnoPlayer *person){
 
 
 UnoCard *UnoDeck::deal(){
+	shuffle();
 	UnoCard *card = this->card;
-
 	if(card == NULL){
 		return NULL;
 	}
 
 	else{
-		totalCards = 0;
-		UnoCard *prev = card;
-		while(card != NULL){
+		delete this;
+		return card;
+		/*while(card != NULL){
 			prev = card;
 			//In the case of a wild or a drawFour card
-			if(card->cardNum == 0 && card->color == ""){
-				if(card->event == "drawFour" || card->event == "wild"){
+			if(card->getCardNum() == -1 && card->color == ""){
+				if(card->getEvent() == "drawFour" || card->event == "wild"){
 					UnoCard *special = new UnoCard(card->event);
 				}
 			}
 			//Otherwise its a number, color with other events besides drawFour and wild
 			else{
 				if(card->color != "" && card->cardNum != -1){
-					UnoCard *special = new UnoCard(card->color);
+					UnoCard *special = new UnoCard(card->cardNum,card->color);
 				}
 				else if(card->cardNum == -1){
-
+					UnoCard *special = new UnoCard(card->color, card->event);
 				}
 			}
 			card = card->next;
 		}
-
+	*/
 
 		//head->next = head;
 		//delete head;
@@ -107,7 +108,7 @@ UnoCard *UnoDeck::deal(){
 		}
 		*/
 	}
-	return card;
+
 }
 
 
@@ -165,9 +166,21 @@ int UnoDeck::getTotalDiscarded(){
 
 //Shuffles the deck before dealing out the cards
 void UnoDeck::shuffle(){
+	//Random Distribution of the 108 total cards in the pile
+	srand(time(0));
 	int shuffle = rand % 108;
 	for(int i = 0; i < shuffle; ++i){
-
+		if((hand->getEvent() == "wild" || hand->getEvent() == "drawFour") && (hand->getCardNum() == -1 && hand->getColor() == "")){
+			card = new UnoCard(hand->event);
+		}
+		else if(hand->getEvent() != "wild" && hand->getEvent != "drawFour"){
+			if(hand->getCardNum() != -1){
+				card = new UnoCard(hand->cardNum, hand->color);
+			}
+			else{
+				card = new UnoCard(hand->color, hand->event);
+			}
+		}
 	}
 
 
@@ -183,7 +196,19 @@ void UnoDeck::wild(string color){
 void UnoDeck::reShuffle(){
 	int shuffle = rand % 108;
 	if(this->totalCards == 0 && this->totalDiscarded == 108){
-
+		for(int i = 0; i < shuffle; ++i){
+			if((hand->getEvent() == "wild" || hand->getEvent() == "drawFour") && (hand->getCardNum() == -1 && hand->getColor() == "")){
+				card = new UnoCard(hand->event);
+			}
+		else if(hand->getEvent() != "wild" && hand->getEvent != "drawFour"){
+			if(hand->getCardNum() != -1){
+				card = new UnoCard(hand->cardNum, hand->color);
+			}
+			else{
+				card = new UnoCard(hand->color, hand->event);
+			}
+		}
+	}
 	}
 }
 
