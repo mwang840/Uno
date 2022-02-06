@@ -29,12 +29,15 @@ int main(){
 
 		if(unoOut == true){
 			cout<<hand->player << " is out of the game!"<<endl;
+			delete hand;
 			players--;
+			if(oneLeft == true){
+				cout<<"Game over, you lost"<<endl;
+				break;
+			}
 		}
 
-		if(oneLeft == true){
-			cout<<"Game over, you lost"<<endl;
-		}
+		
 
 	}
 
