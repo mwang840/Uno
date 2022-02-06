@@ -23,7 +23,8 @@ Uno::Uno() {
 }
 
 void Uno::startGame(){
-	shuffle();
+	hand->shuffle();
+
 }
 
 Uno::~Uno() {
