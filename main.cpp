@@ -27,17 +27,24 @@ int main(){
 		UnoDeck *hand = new UnoDeck();
 		hand->deal();
 
+		//if(hand->player->)
+
 		if(unoOut == true){
 			cout<<hand->player << " is out of the game!"<<endl;
 			delete hand;
 			players--;
+
+			if(players == 1){
+				oneLeft = true;
+			}
+
 			if(oneLeft == true){
 				cout<<"Game over, you lost"<<endl;
 				break;
 			}
 		}
 
-		
+
 
 	}
 
